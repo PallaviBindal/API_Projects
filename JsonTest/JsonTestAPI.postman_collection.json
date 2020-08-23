@@ -1,0 +1,761 @@
+{
+	"info": {
+		"_postman_id": "b26bfc15-b247-489d-a1f6-ef46afd0c21b",
+		"name": "JsonTestAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Happy Path",
+			"item": [
+				{
+					"name": "Get external IP address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aa4ffab4-a91a-4890-8387-b25f6c49bc8d",
+								"exec": [
+									"pm.test(\"verify Status code is 200\", function () {\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify Ip address\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.collectionVariables.set(\"CurrentIP\",jsonData.ip);\r",
+									"    pm.expect(jsonData.ip).to.eql(pm.variables.get(\"CurrentIP\"));\r",
+									"   \r",
+									"});\r",
+									" \r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ip.jsontest.com/",
+							"protocol": "http",
+							"host": [
+								"ip",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with date in three formats",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8c47c62-365b-4601-bfa8-51b62d625159",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"date\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://date.jsontest.com/",
+							"protocol": "http",
+							"host": [
+								"date",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with entering valid key and value pair",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b69f42b-20bb-4bc1-944f-7465f2b9f286",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate key values \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Value1,jsonData.Key1).to.eql(pm.variables.get(\"value1\",\"key1\"));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://echo.jsontest.com/Key1/{{key1}}/Value1/{{value1}}",
+							"protocol": "http",
+							"host": [
+								"echo",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"Key1",
+								"{{key1}}",
+								"Value1",
+								"{{value1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parse Json parameter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24bdc215-0d22-4081-a006-79e6449927e8",
+								"exec": [
+									"pm.test(\" validate seconds string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"parse_time_nanoseconds\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"verify validate equals to true \", function () {\r",
+									"    var jsonData= pm.response.json();\r",
+									"    console.log(jsonData.validate);\r",
+									"\r",
+									"pm.collectionVariables.set(\"Validate\", jsonData.validate);\r",
+									"});\r",
+									"\r",
+									"//verify request code \r",
+									"pm.test(\"Successful  message\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"  \r",
+									"  \r",
+									"//verify status code string\r",
+									"pm.test(\"Status code name has string OK\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://validate.jsontest.com/?json={{value}}",
+							"protocol": "http",
+							"host": [
+								"validate",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "json",
+									"value": "{{value}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json obejct in current Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "254c1b2f-2133-4354-a122-bec0e87ad23b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"date\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify Date\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.collectionVariables.set(\"Currentdate\",jsonData.date);\r",
+									"    pm.expect(jsonData.date).to.eql(pm.variables.get(\"Currentdate\"));\r",
+									"   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://date.jsontest.com/",
+							"protocol": "http",
+							"host": [
+								"date",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get time in milliseconds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e884fefa-85c9-4ab2-a1c7-3a016215e4d2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response Body matches string time \", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"time\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify time\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.collectionVariables.set(\"Currenttime\",jsonData.time);\r",
+									"    pm.expect(jsonData.time).to.eql(pm.variables.get(\"Currenttime\"));\r",
+									"   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://date.jsontest.com/",
+							"protocol": "http",
+							"host": [
+								"date",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get multiple json obejcts with keys and corrosponding values ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99c89e31-0660-4ce3-87a1-dfd952af0abe",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate key values \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Value1,jsonData.Value2,jsonData.Key1,jsonData.Key2).to.eql(pm.variables.get(\"value1\",\"value2\",\"key1\",\"key2\"\r",
+									"    ));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://echo.jsontest.com/Key1/{{key1}}/Value1/{{value1}}/Key2/{{key2}}/Value2/{{value2}}",
+							"protocol": "http",
+							"host": [
+								"echo",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"Key1",
+								"{{key1}}",
+								"Value1",
+								"{{value1}}",
+								"Key2",
+								"{{key2}}",
+								"Value2",
+								"{{value2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Negative Path",
+			"item": [
+				{
+					"name": "Get an IP address with invalid route ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "789b95a4-3610-4b26-9109-248ca07dac21",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Status code name has string Not Found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://jsontest.com/{}",
+							"protocol": "http",
+							"host": [
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"{}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with entering invalid key and value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f5dee701-9271-42ad-b83d-dd5c1e9e6445",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Status code name has string Not Found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://jsontest.com/key/{}",
+							"protocol": "http",
+							"host": [
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"key",
+								"{}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with null key and value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7b43d07f-3355-4306-9541-25d336013955",
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://jsontest.com/key/{}/value/{}",
+							"protocol": "http",
+							"host": [
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"key",
+								"{}",
+								"value",
+								"{}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Date if date is missing from URI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9fbfbef4-80a3-4eb2-ab90-18c96765aa2b",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Status code name has string Not Found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://jsontest.com/{}",
+							"protocol": "http",
+							"host": [
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"{}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current IP address without entering ip in URI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2aad6b66-9d13-4ccb-8f1c-b097d237245c",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Status code name has string Not Found\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://jsontest.com/{}",
+							"protocol": "http",
+							"host": [
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"{}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with date and time using invalid route ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6dd3cc40-f98b-4814-b675-02c070c5ee57",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://jsontest.com/{}",
+							"protocol": "http",
+							"host": [
+								"jsontest",
+								"com"
+							],
+							"path": [
+								"{}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with incorrect route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf4f0dc8-186d-4c1e-bed4-5def0291e8dc",
+								"exec": [
+									"pm.test(\"Error message\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.collectionVariables.set(\"ErrorMessage\",jsonData.error);\r",
+									"    pm.expect(jsonData.error).to.eql(pm.variables.get(\"ErrorMessage\"));\r",
+									"  \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://validate.jsontest.com",
+							"protocol": "http",
+							"host": [
+								"validate",
+								"jsontest",
+								"com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get json object with null json parameter ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a7a0491-b322-4474-bf23-ce5030275110",
+								"exec": [
+									"\r",
+									"   \r",
+									"    pm.test(\"Validation check\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.collectionVariables.set(\"validatevalue\",jsonData.validate);\r",
+									"    pm.expect(jsonData.validate).to.eql(pm.variables.get(\"validatevalue\"));\r",
+									"   \r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://validate.jsontest.com/?json=",
+							"protocol": "http",
+							"host": [
+								"validate",
+								"jsontest",
+								"com"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "json",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4cc3464a-2aab-4208-958a-03c20a6e8590",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bf01b929-16d1-4f2a-8ac0-fd215f31427e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "936dcd26-67ec-4254-b183-5b6c0d7e2dcc",
+			"key": "url",
+			"value": "http:"
+		},
+		{
+			"id": "a8d49752-8e42-422a-b0a4-dc40be6a058c",
+			"key": "key1",
+			"value": "PL"
+		},
+		{
+			"id": "c1023103-e0bf-424d-b642-d6d6ca54edf1",
+			"key": "value1",
+			"value": "45"
+		},
+		{
+			"id": "4ed1c95e-1761-4414-b31d-65a0e94ffda3",
+			"key": "key2",
+			"value": "KK"
+		},
+		{
+			"id": "60f8010b-5b79-4c4b-88cc-e11363673d56",
+			"key": "value2",
+			"value": "33"
+		},
+		{
+			"id": "dc210618-6d1f-4f87-991b-85f250aa4eb6",
+			"key": "value",
+			"value": "%5BJSON-code-to-validate%5D"
+		},
+		{
+			"id": "99672765-8fed-49f7-a7fc-a95979045528",
+			"key": "Validate",
+			"value": "true"
+		},
+		{
+			"id": "2957d1ad-ce7d-45aa-8c26-b5431a086cc3",
+			"key": "Currentdate",
+			"value": ""
+		},
+		{
+			"id": "f169862d-cb85-4a64-a738-6d0ac1c1986b",
+			"key": "Currenttime",
+			"value": ""
+		},
+		{
+			"id": "8d26871b-b8ac-455c-867e-27683287cffa",
+			"key": "validatevalue",
+			"value": ""
+		},
+		{
+			"id": "668ef798-0243-4636-bf2a-910763ade349",
+			"key": "ErrorMessage",
+			"value": ""
+		},
+		{
+			"id": "2eb38687-d25e-4db8-a785-bb601d690d7e",
+			"key": "{{Validate}}",
+			"value": ""
+		},
+		{
+			"id": "6077b622-c8d1-4db5-990c-d9ef41834d0d",
+			"key": "CurrentIP",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "8997737f-c38c-45bb-a911-7aec6737687b",
+		"name": "DummyRestAPITestsuite1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "invalid records ",
+			"item": [
+				{
+					"name": "get a record with invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4f8e1cdf-29cf-4b00-89f5-041e5fa0c384",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"     pm.response.to.have.status(401);\r",
+									"});\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.eql(\"Record does not found.\");\r",
+									"});\r",
+									"   \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/employee/{{id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a record with invalid schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc03e473-b787-4366-88c0-c7f4176f625b",
+								"exec": [
+									"const schema = {\r",
+									"    \"type\": \"object\", \r",
+									"    \"properties\":{\r",
+									"        \"status\" :{\"type\":\"object\"},\r",
+									"        \"data\": {\r",
+									"             \"TYPE\" :\"OBJECT\",\r",
+									"             \"PROPERTIES\" : {\r",
+									"                \"name\" : { \"TYPE\" : \"STRING\"},\r",
+									"                \"salary\" : {\"TYPE\" : \"STRING\"},\r",
+									"                \"age\" : {\"TYPE\" : \"STRING\"},\r",
+									"                \"id\" : {\"TYPE\": \"INTEGER\"}\r",
+									"             },\r",
+									"            required : [\"name\",\"salary\",\"age\"]\r",
+									"\r",
+									"         }\r",
+									"    },\r",
+									"    required :[\"status\", \"data\"],\r",
+									"    };\r",
+									"\r",
+									"\r",
+									"   \r",
+									"\r",
+									"\r",
+									"pm.test(\"schema validation\",function(){\r",
+									"pm.expect(tv4.validate(pm.response.json(),schema)).is.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/employee/9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch a record with string type id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e673143-d178-4300-89d1-3219fa44a52d",
+								"exec": [
+									"// pm.test(\"Status code name has string\", function () {\r",
+									"//     pm.response.to.have.status(\"Bad request\");\r",
+									"// });\r",
+									"\r",
+									"pm.test(\"success key has value failed\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"failed\");\r",
+									"});\r",
+									"//   pm.test(\"mesage\", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include(\"Oops! someting issue found to fetch record.\");\r",
+									"// });\r",
+									"  \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/employee/tct",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								"tct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch  a  record with id is null",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a7621a1-d234-471a-98b8-1ec0dc363188",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"     pm.response.to.have.status(404);\r",
+									"});\r",
+									"   \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/employee/?id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"employee",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch  a record with invalid path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc3f9409-9fb2-4c92-be90-ad7612cbf4fe",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/emp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"emp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a record with invalid age",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5020bed3-401c-4056-951f-4ae8fdb34ce3",
+								"exec": [
+									"var commontests = () =>\r",
+									"{\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"};\r",
+									"\r",
+									"pm.environment.set(\"commontests\",commontests.toString());\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a0406fa-dc58-4e48-9141-892a0dbf2f8f",
+								"exec": [
+									"\r",
+									"\r",
+									"\r",
+									" \r",
+									"// pm.test(\"Your test name\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.age).to.eql(pm.environment.get(\"age\"));\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Verify employee age\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.data.age).to.eql(pm.environment.get(\"age\"\"\"));\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"verify age with invalid inputs \", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"// });\r",
+									"pm.test(\"verify age\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.age).to.eql(\"20\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"verify name \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.name).to.eql(\"test1\");\r",
+									"    \r",
+									"pm.environment.set(\"id\", jsonData.data.id);\r",
+									"\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// pm.test(\" Test 2- Returns 4 char alhpanumeric id\", function () {\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     //pm.expect(jsonData.data.salary).to.match(/^[a-z0-9]{4}$/);\r",
+									"//     pm.expect(jsonData.data.salary).to.match(\"salary\");\r",
+									"// });\r",
+									"// pm.test(\" Test 3- return value\", function () {\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.data.salary).to.eql(\"20000\");\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\" Test 4- Returns 2 char alhpanumeric id\", function () {\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//   //  pm.expect(jsonData.data.age).to.match(/^[a-z0-9]{2}$/);\r",
+									"//    pm.expect(jsonData.data.age).to.eql(\"age\");\r",
+									"// });\r",
+									"\r",
+									"// const schema = {\r",
+									"//     \"type\" : \"object\" ,\r",
+									"//     \"properties\" :  {\r",
+									"//          \"status\" : { \"type\" : \"string\"},\r",
+									"//          \"data\": {\r",
+									"//              \"type\" :\"object\",\r",
+									"//              \"properties\" : {\r",
+									"//                 \"name\" : { \"type\" : \"string\"},\r",
+									"//                 \"salary\" : {\"type\" : \"string\"},\r",
+									"//                 \"age\" : {\"type\" : \"string\"},\r",
+									"//                 \"id\" : {\"type\": \"integer\"}\r",
+									"//              },\r",
+									"//             required : [\"name\",\"salary\",\"age\"]\r",
+									"\r",
+									"//          }\r",
+									"//     },\r",
+									"//     required :[\"status\", \"data\"],\r",
+									"//     };\r",
+									"\r",
+									"\r",
+									"\r",
+									"// pm.test(\"test 5- validate schema\",() => {\r",
+									"\r",
+									"//     pm.response.to.have.jsonSchema(schema);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\" test 6- Body matches string\", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include(\"ruhan\");\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test1\",\n    \"salary\": \"200000\",\n    \"age\": \"20\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a record wih invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac63e5cc-8854-4e2a-96b5-236379f4a745",
+								"exec": [
+									"\r",
+									"pm.test(\"test 1- Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"rajesh\",\n    \"salary\": \"3000\",\n    \"age\": \"23\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/update/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a record wih invalid name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c09735f0-f0a6-4324-89a1-1d7f9a89d932",
+								"exec": [
+									"\r",
+									"pm.test(\"test 1- Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"rajesh\",\n    \"salary\": \"3000\",\n    \"age\": \"23\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/update/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a record wih invalid id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/store/order/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"store",
+								"order",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "<long>",
+									"description": "(Required) ID of the order that needs to be deleted"
+								}
+							]
+						},
+						"description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors"
+					},
+					"response": [
+						{
+							"name": "Order not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/store/order/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"store",
+										"order",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Invalid ID supplied",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/store/order/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"store",
+										"order",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
